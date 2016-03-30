@@ -5,30 +5,27 @@ public class OrientedGravity : MonoBehaviour {
 
     public GameObject refObject;
     public float gravityForce;
-    public Rigidbody rb;
+    public float teste;
+    Rigidbody rb;
+    Vector3 dir;
 
 	void Start () {
         rb = GetComponent<Rigidbody>();
-	}
-	
-	void Update () {
+    }
+
+    void Update () {
         ApplyGravity();
 	}
 
     void ApplyGravity() {
-        RaycastHit hit;
-        Vector3 dir = refObject.transform.position - transform.position;
-        if (Physics.Raycast(transform.position, dir,out hit, Mathf.Infinity)) {
-            rb.AddForce(new Vector3(
-                hit.point.x*-gravityForce,
-                hit.point.y*-gravityForce,
-                hit.point.z*-gravityForce), ForceMode.Force);
-           //transform.up = hit.normal;
-            print(hit.point);
-        }
-        else{
-            print("Passou reto");
-        }
-        
+        //direcao do objeto para o objeto de referencia
+        dir = refObject.transform.position - transform.position;
+        //rotaciona o objeto para ficar em pé
+        //se usado apenas o tranform.up ele se move irregularmente em alguns pontos
+        transform.rotation = Quaternion.Slerp(transform.rotation
+            ,Quaternion.FromToRotation(transform.up,-dir)*transform.rotation
+            ,1.0f);
+        rb.AddForce(dir.normalized*gravityForce);
     }
+
 }
