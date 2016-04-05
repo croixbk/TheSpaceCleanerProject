@@ -5,7 +5,6 @@ public class OrientedGravity : MonoBehaviour {
 
     public GameObject refObject;
     public float gravityForce;
-    public float teste;
     Rigidbody rb;
     Vector3 dir;
 
