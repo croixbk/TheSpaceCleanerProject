@@ -24,7 +24,7 @@ public class OrientedGravity : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation
             ,Quaternion.FromToRotation(transform.up,-dir)*transform.rotation
             ,1.0f);
-        rb.AddForce(dir.normalized*gravityForce);
+        rb.AddForce(dir.normalized*gravityForce, ForceMode.Force);
     }
 
 }
